@@ -119,13 +119,14 @@
 html is set to 62.5% so that all the REM measurements throughout Skeleton
 are based on 10px sizing. So basically 1.5rem = 15px :) */
 html {
-  font-size: 62.5%; }
+  font-size: 62.5%; 
+  background-color: #333 }
 body {
-  font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
-  line-height: 1.6;
+  font-size: 1.9em; /* currently ems cause chrome bug misinterpreting rems on body element */
+  line-height: 2.0;
   font-weight: 400;
-  font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #222; }
+  font-family: "Scope One", 'Courier New', Courier, monospace, serif;
+  color: darkgoldenrod; }
 
 
 /* Typography
@@ -158,9 +159,12 @@ p {
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
-  color: #1EAEDB; }
+  color: white; 
+  text-decoration: none; }
 a:hover {
-  color: #0FA0CE; }
+  color: goldenrod; }
+a:active {
+    color: goldenrod; }
 
 
 /* Buttons
@@ -400,7 +404,6 @@ near the relevant code. For example, if you wanted to change the styles for butt
 on small devices, paste the mobile query code up in the buttons section and style it
 there.
 */
-
 
 /* Larger than mobile */
 @media (min-width: 400px) {}

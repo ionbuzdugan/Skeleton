@@ -183,6 +183,8 @@ sub {
 
 img {
   border: 0;
+  transition:transform 0s ease;
+  max-width: 100%;
 }
 
 /**
