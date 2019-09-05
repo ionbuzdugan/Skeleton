@@ -1,0 +1,27 @@
+{
+    "BIG_SUR": [
+        {
+            "text": "Big Sur| DATE", 
+            "link": "pages/BIG_SUR.html", 
+            "name": "BIG_SUR", 
+            "photos": [
+                {
+                    "link-small": "images/smalls/BIG_SUR/photo-1542044896530-05d85be9b11a.jpeg", 
+                    "link-original": "images/originals/BIG_SUR/photo-1542044896530-05d85be9b11a.jpeg"
+                }, 
+                {
+                    "link-small": "images/smalls/BIG_SUR/photo-1523895665936-7bfe172b757d.jpeg", 
+                    "link-original": "images/originals/BIG_SUR/photo-1523895665936-7bfe172b757d.jpeg"
+                }
+            ]
+        }
+    ], 
+    "SMALL_SUR": [
+        {
+            "text": "Small Sur| DATE", 
+            "link": "pages/SMALL_SUR.html", 
+            "name": "SMALL_SUR", 
+            "photos": []
+        }
+    ]
+}
