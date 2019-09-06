@@ -7,7 +7,7 @@
  */
 
 html {
-  font-family: sans-serif; /* 1 */
+  font-family: "https://fonts.googleapis.com/css?family=Scope+One:400,300,600"; /* 1 */
   -ms-text-size-adjust: 100%; /* 2 */
   -webkit-text-size-adjust: 100%; /* 2 */
 }
@@ -185,6 +185,7 @@ img {
   border: 0;
   transition:transform 0s ease;
   max-width: 100%;
+  object-fit: cover;
 }
 
 /**

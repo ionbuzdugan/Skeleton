@@ -10,15 +10,18 @@ ORIGINAL_FOLDER = 'images/originals/'
 SMALL_FOLDER = 'images/smalls/'
 PAGES_FOLDER = 'pages/'
 PHOTO_LIB = json.load(open('photo_ref.json'))
-INDEX_TEMPLATE = open('index_template.txt')
+INDEX_TEMPLATE = open('templates/index_template.txt')
+PAGE_TEMPLATE = open('templates/page_template.txt')
 
 # Copy source folder into images/ directory
-def clear_dirs(symlinks=False, ignore=None):
+def reset_library(symlinks=False, ignore=None):
     # Delete all files in destination
     shutil.rmtree(PAGES_FOLDER)
     os.mkdir(PAGES_FOLDER)
+    print ('Reset PAGES')
     shutil.rmtree(SMALL_FOLDER)
     os.mkdir(SMALL_FOLDER)
+    print ('Reset SMALLS')
 
     # Copy all files and folders into smalls folder
     for item in os.listdir(ORIGINAL_FOLDER):
@@ -28,6 +31,7 @@ def clear_dirs(symlinks=False, ignore=None):
             shutil.copytree(s, d, symlinks, ignore)
         else:
             shutil.copy2(s, d)
+    print ('Photos COPIED')
 
 # Resize and saved photo passed contained din pPath argument
 def smallify_photo(pPath):
@@ -36,7 +40,6 @@ def smallify_photo(pPath):
     horizontalSize = int((float(img.size[1])*float(scaleFactor)))
     img = img.resize((IMAGE_WIDTH,horizontalSize), Image.ANTIALIAS)
     img.save(pPath)
-    print("Saved ",pPath)
 
 # Walk through photo directory and resize photos
 def convert_photos():
@@ -47,49 +50,56 @@ def convert_photos():
                 smallify_photo(fullPath)
 
 # Add photo page link to index.html 
-def add_links_to_index(name,link):
+def add_links_to_index():
     with open("index.html","w") as fIndex:
         for line in INDEX_TEMPLATE:
             if 'END LINKS HERE' in line:
-                
+                fIndex.write('\t<p>\n')
+                i=0
+                for page in PHOTO_LIB:
+                    if i==0:
+                        s = '\t\t<a href='+page['link']+'>'+page['text']+' | '+page['date']+'</a>\n'
+                    else:
+                        s = '\t\t<br><a href='+page['link']+'>'+page['text']+' | '+page['date']+'</a>\n'
+                    fIndex.write(s)
+                    i+=1
+                fIndex.write('\t</p>\n')
             fIndex.write(line)
 
+# Add photo page link to index.html 
+def add_gallery_pages():
+    for page in PHOTO_LIB:
+        with open(page['link'],"w") as gOut:
+            PAGE_TEMPLATE = open('templates/page_template.txt')
+            for line in PAGE_TEMPLATE:
+                if 'END IMAGES HERE' in line:
+                    photos=page['photos']
+                    gOut.write('\t\t<div class=row>\n')
+                    i=0
+                    for photo in photos:
+                        if i>0 and i%3 ==0:
+                            gOut.write('\t\t</div>\n')
+                            gOut.write('\t\t<div class=row>\n')
+                        s='\t\t\t<a class=\"four columns\" href=../'+photo['link-original']+' target=_blank><img src=../'+photo['link-small']+'></a>\n'
+                        gOut.write(s)
+                        i+=1
+                    gOut.write('\t\t</div>\n')
+                elif 'HEADER HERE' in line:
+                    s="\t\t\t\t\t\t<h3><font color=white>"+page['text']+"</font> | <font color=white>"+page['date']+'</font></h3>\n'
+                    gOut.write(s)
 
-def create_ref():
-    d=DESTINATION_FOLDER
-    subdirs = [o for o in os.listdir(d) if os.path.isdir(os.path.join(d,o))]
-    with open(REFERENCE_FILE) as f:
-        t = f.read()
-        for folder in subdirs:
-            folderName=folder.replace("_"," ")
-            folderName = folderName.title()
-            if folderName not in t:
-                t=t+folderName+ " | DATE\n"
-                t=t+folder+"\n"
-    
-    with open(REFERENCE_FILE,"w") as f:
-        f.write(t)
-                
-def create_page(name,link):
-    # imgs = [i for i in os.listdir('images/'+link+"/")] if not os.isdir(os.path.join(i,))
-    with open(REFERENCE_FILE) as f:
-        l = f.readlines()
-
-
+                elif 'TITLE HERE' in line:
+                    s='<title>Ion Buzdugan - '+page['text']+'</title>\n'
+                    gOut.write(s)
+                gOut.write(line)
+        print ('Created ',page['name'], ' page')
 
 def main():
-    print(INDEX_TEMPLATE.read()[0:21])
+    create_ref_json()
+    reset_library()
     convert_photos()
-    create_ref()
-    remove_links_from_index()
-    with open(REFERENCE_FILE,"r") as f:
-        l = f.readlines()
-        for i in range(0,len(l),2):
-            name = l[i][0:-1]
-            link = l[i+1][0:-1]
-            add_links_to_index(name, link)
-            create_page(name,link)
-
+    add_links_to_index()
+    add_gallery_pages()
 
 
 if __name__ == "__main__":
