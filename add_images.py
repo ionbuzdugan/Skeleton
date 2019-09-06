@@ -4,8 +4,9 @@ from PIL import Image
 from bs4 import BeautifulSoup, NavigableString
 import json
 from create_ref_json import main as create_ref_json
+import time
 
-IMAGE_WIDTH = 500
+IMAGE_MAX = 500
 ORIGINAL_FOLDER = 'images/originals/'
 SMALL_FOLDER = 'images/smalls/'
 PAGES_FOLDER = 'pages/'
@@ -16,10 +17,12 @@ PAGE_TEMPLATE = open('templates/page_template.txt')
 # Copy source folder into images/ directory
 def reset_library(symlinks=False, ignore=None):
     # Delete all files in destination
-    shutil.rmtree(PAGES_FOLDER)
+    if os.path.isdir(PAGES_FOLDER):
+        shutil.rmtree(PAGES_FOLDER)
     os.mkdir(PAGES_FOLDER)
     print ('Reset PAGES')
-    shutil.rmtree(SMALL_FOLDER)
+    if os.path.isdir(SMALL_FOLDER):
+        shutil.rmtree(SMALL_FOLDER)
     os.mkdir(SMALL_FOLDER)
     print ('Reset SMALLS')
 
@@ -36,9 +39,19 @@ def reset_library(symlinks=False, ignore=None):
 # Resize and saved photo passed contained din pPath argument
 def smallify_photo(pPath):
     img = Image.open(pPath)
-    scaleFactor = IMAGE_WIDTH/float(img.size[0])
-    horizontalSize = int((float(img.size[1])*float(scaleFactor)))
-    img = img.resize((IMAGE_WIDTH,horizontalSize), Image.ANTIALIAS)
+    oWidth, oHeight = img.size
+    # Make minimum dimension IMAGE_MAX
+    if oHeight/oWidth > 1:
+        scaleFactor = IMAGE_MAX/oWidth
+    else:
+        scaleFactor = IMAGE_MAX/oHeight
+    nHeight = int(oHeight*scaleFactor)
+    nWidth = int(oWidth*scaleFactor)
+    img = img.resize((nWidth,nHeight), Image.ANTIALIAS)
+
+    cropHorizontal = (nWidth-IMAGE_MAX)/2
+    cropVertical = (nHeight-IMAGE_MAX)/2
+    img = img.crop((cropHorizontal,cropVertical,cropHorizontal+IMAGE_MAX,cropVertical+IMAGE_MAX))
     img.save(pPath)
 
 # Walk through photo directory and resize photos
