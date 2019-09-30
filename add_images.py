@@ -10,7 +10,6 @@ IMAGE_MAX = 500
 ORIGINAL_FOLDER = 'images/originals/'
 SMALL_FOLDER = 'images/smalls/'
 PAGES_FOLDER = 'pages/'
-PHOTO_LIB = json.load(open('photo_ref.json'))
 INDEX_TEMPLATE = open('templates/index_template.txt')
 PAGE_TEMPLATE = open('templates/page_template.txt')
 
@@ -20,11 +19,11 @@ def reset_library(symlinks=False, ignore=None):
     if os.path.isdir(PAGES_FOLDER):
         shutil.rmtree(PAGES_FOLDER)
     os.mkdir(PAGES_FOLDER)
-    print ('Reset PAGES')
+    print ('Reset PAGES', flush=True)
     if os.path.isdir(SMALL_FOLDER):
         shutil.rmtree(SMALL_FOLDER)
     os.mkdir(SMALL_FOLDER)
-    print ('Reset SMALLS')
+    print ('Reset SMALLS', flush=True)
 
     # Copy all files and folders into smalls folder
     for item in os.listdir(ORIGINAL_FOLDER):
@@ -34,7 +33,7 @@ def reset_library(symlinks=False, ignore=None):
             shutil.copytree(s, d, symlinks, ignore)
         else:
             shutil.copy2(s, d)
-    print ('Photos COPIED')
+    print ('Photos COPIED', flush=True)
 
 # Resize and saved photo passed contained din pPath argument
 def smallify_photo(pPath):
@@ -105,15 +104,13 @@ def add_gallery_pages():
                     s='<title>Ion Buzdugan - '+page['text']+'</title>\n'
                     gOut.write(s)
                 gOut.write(line)
-        print ('Created ',page['name'], ' page')
+        print ('Created ',page['name'], ' page', flush=True)
 
-def main():
+
+if __name__ == "__main__":
     create_ref_json()
+    PHOTO_LIB = json.load(open('photo_ref.json'))
     reset_library()
     convert_photos()
     add_links_to_index()
     add_gallery_pages()
-
-
-if __name__ == "__main__":
-    main()
