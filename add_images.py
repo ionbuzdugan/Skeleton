@@ -81,6 +81,7 @@ def add_links_to_index():
 # Add photo page link to index.html 
 def add_gallery_pages():
     for page in PHOTO_LIB:
+        print ('Creating ',page['name'], ' page', flush=True)
         with open(page['link'],"w") as gOut:
             PAGE_TEMPLATE = open('templates/page_template.txt')
             for line in PAGE_TEMPLATE:
@@ -104,7 +105,7 @@ def add_gallery_pages():
                     s='<title>Ion Buzdugan - '+page['text']+'</title>\n'
                     gOut.write(s)
                 gOut.write(line)
-        print ('Created ',page['name'], ' page', flush=True)
+        
 
 
 if __name__ == "__main__":
