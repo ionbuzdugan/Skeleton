@@ -3,39 +3,43 @@
  <head>
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta charset="utf-8"/>
-  <title>
-   Ion Buzdugan
-  </title>
-  <meta content="portfolio" name="description"/>
-  <meta content="Ion B" name="author"/>
+  <meta charset="utf-8">
+  <!-- TITLE HERE -->
+  <meta name="description" content="portfolio">
+  <meta name="author" content="Ion B">
+
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="https://fonts.googleapis.com/css?family=Scope+One:400,300,600" rel="stylesheet" type="text/css"/>
+
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="css/normalize.css" rel="stylesheet"/>
   <link href="css/skeleton.css" rel="stylesheet"/>
+
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="favicon.png" rel="icon" type="image/png"/>
  </head>
+
  <body>
-  <!-- Primary Page Layout
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <div class="container">
-   <div class="row">
-    <div class="one-half column" style="margin-top: 5%">
-     <h1><font color="white">Ion</font> Buzdugan</h1>
-     <!-- START LINKS HERE -->
-     <!-- END LINKS HERE -->
+    <div class="container">
+        <div class="row">
+          <div class="one-half column" style="margin-top: 5%">
+            <h1><font color="white">Ion</font> Buzdugan</h1>
+            <!-- HEADER HERE -->
+          </div>
+        </div>
     </div>
-   </div>
+  </container>
+          
+  <div class="container">
+  <!-- START IMAGES HERE -->
+  <!-- END IMAGES HERE -->
   </div>
-  <!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
- </body>
+
+  </body>
 </html>

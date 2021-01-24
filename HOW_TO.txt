@@ -1,0 +1,3 @@
+HOW TO USE
+    1. Paste new photos to PLACE_PHOTOS_HERE
+    2. Run main.py
